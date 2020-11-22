@@ -1,0 +1,113 @@
+bug bounty tools installation
+----------------------------------------------------------
+>> apt-get install golang
+check version
+>> go --version
+
+>> httprobe github
+
+
+tool 2:-- ffuf
+
+>> ffuf github
+>> cd ffuf
+>> go build
+>> change name 
+>> mv ffuf fuzd
+>> ./fuzz
+how to run the fuzz tool
+>> ./fuzz -w /root/tools/seclists/Discovery/Web-Content/raft-large-directories.txt -u "http://example.com/FUZZ"
+
+>> ./fuzz -w /root/tools/seclists/Discovery/Web-Content/raft-large-directories.txt -u "http://example.com/FUZZ" -fc 401 (fc means filter code 401 skipped)
+
+>> ./fuzz -w /root/tools/seclists/Discovery/Web-Content/raft-large-directories.txt -u "http://example.com/FUZZ" -mc 301 (mc means match code)
+
+>> ./fuzz -w /root/tools/seclists/Discovery/Web-Content/raft-large-directories.txt -u "http://example.com/FUZZ" -recursion
+
+>> ./fuzz -w /root/tools/seclists/Discovery/Web-Content/raft-large-directories.txt -u "http://example.com/FUZZ" -recursion -recursion depth 2
+
+>> ./fuzz -w /root/tools/seclists/Discovery/Web-Content/raft-large-directories.txt -u "http://example.com/FUZZ.EXT" -w /usr/share/seclists/Discovery/Web-Content/ext.txt:EXT
+
+>> ./fuzz -w /root/tools/seclists/Discovery/Web-Content/raft-large-directories.txt -u "http://example.com/FUZZ" -o metasploit -of csv
+
+tool 3:- EyeWitness - take screenshots of websites
+
+>> apt-get install eyewitness
+>> eyewitness --help
+>> eyewitness --web -f domains.txt
+>> eyewitness --web -f /root/Desktop/eyewitness/domains.txt -d /root/Desktop/eyewitness/screen
+
+tool 4:- JSParser
+
+>> github JSParser
+
+tool 5:- masscan
+
+>> github masscan
+
+>> https://danielmiessler.com/study/masscan/
+
+>> https://github.com/robertdavidgraham/masscan
+
+>> https://www.youtube.com/watch?v=VJOhbl3uuG0&list=PLsbgw-XvxIhGBQGiTuH0yZL8TwgONvTXf&index=5
+
+
+>> masscan <ip-address> -p 443
+
+tool 6:- massdns
+
+>> github.com/blechschmidt/massdns
+
+>> assetfinder att.com --subs-only | ./massdns -r ../lists/reslovers.txt -o S -w resloved.txt
+
+>> assetfinder domain.com --subs-only | ./massdns -r ../lists/reslovers.txt -o S -w results.txt domains-list.txt
+
+>> massdns/bin/$ cat resloved.txt | sed 's/A.*// ; s/CN.*// ; s/\..$//'
+
+>> massdns/bin/$ cat resloved.txt | sed 's/A.*// ; s/CN.*// ; s/\..$//' | wc -w
+
+tool 7:- owasp amass
+
+>> github amass
+
+>> apt-get install amass
+
+>> amass intel -d att.com -whois
+
+>> amass intel -d att.com -whois -o attamass.com
+
+>> cat attamass.com | wc -w 
+
+>> cat attamass.com | grep att | wc -w 
+
+>> cat attamass.com | grep att | > intel.txt
+
+>> massdns.sh attamass.com
+
+>> cat resolved-domains.txt | grep att | wc -w
+
+>> cat resolved-domains.txt | grep att > intel.txt
+
+>> amass enum -d att.com -o enum_att.txt
+
+>> curl amssconfig.ini -O
+
+>> cat config.ini
+
+>> amass intel -asn 2686,17225,7018,,25993 -o asn.txt
+
+>>  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
