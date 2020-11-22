@@ -1,0 +1,51 @@
+musab khan Recon tips:
+----------------------------
+part - 1
+
+github.com/waybackurls
+github.com/gf
+
+echo "att.com" | waybackurls | tee waybackurls.txt
+
+>> gf xss waybackurl.txt
+
+>> gf redirect waybackurl.txt
+
+parallel >> apt-get install parallel
+
+>>assetfinder 
+
+assetfinder att.com | httprobe | tee httprobe.txt
+
+cat redirect.txt | parallel -j 10 curl --proxy http://127.0.0.1:8080 -sk >dev/null
+
+part -2 
+
+xss bug hunting parameters
+
+https://www.openbugbounty.org/blog/devl00p/top-100-xss-dorks/
+
+
+part -3
+
+projectdiscovery/nuclei
+
+cat domains.txt | nuclei -t /root/nuclei-templates/technologies/reverse-proxy-detect.yaml -o nuclei/technogies.txt -v
+
+cat domains.txt | nuclei -t /root/nuclei-templates/vulnerabilities/ -o nuclei/test.txt -v
+
+cat test-case.txt | nuclei -t /root/nuclei-templates/vulnerabilities/microstrategy-ssrf.yaml -o nuclei/microstrategy-ssrf.yaml.txt 
+
+cat domains.txt | nuclei -t /root/nuclei-templates/vulnerabilities/ -o nuclei/results.txt -c 30
+
+part -4 
+
+github.com/tomnomnom/qsreplace
+github.com/ffuf
+
+cat urls.txt | qsreplace "bugbounty"
+
+
+
+
+
