@@ -1,0 +1,13 @@
+dawgyg
+
+>>> tools:----
+→ Amass
+>> amass enum -d media.yahoo.com
+>> amass enum --passive -d media.yahoo.com
+→ crt.sh
+→ dirsearch
+
+
+>> google search ::::::::    xml xss owasp
+>> whoisology
+>> nslookup
