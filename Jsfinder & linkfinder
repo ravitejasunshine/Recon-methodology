@@ -1,0 +1,40 @@
+tools usage
+
+https://link.medium.com/OQCdNgzB89
+
+>> JSFinder
+python JSFinder.py -u http://www.mi.com -d
+
+python JSFinder.py -u http://www.mi.com -d -ou mi_url.txt -os mi_subdomain.txt
+
+python JSFinder.py -f text.txt
+
+python JSFinder.py -f text.txt -j
+
+python JSFinder.py -u http://www.mi.com -c "session=xxx"
+
+
+python JSFinder.py -u http://www.mi.com -ou mi_url.txt
+
+python JSFinder.py -u http://www.mi.com -os mi_subdomain.txt
+• 
+
+python3 JSFinder.py -u https://www.jd.com/
+
+>> Linkfinder
+
+
+Examples
+• Most basic usage to find endpoints in an online JavaScript file and output the HTML results to results.html:
+python linkfinder.py -i https://example.com/1.js -o results.html
+• CLI/STDOUT output (doesn't use jsbeautifier, which makes it very fast):
+python linkfinder.py -i https://example.com/1.js -o cli
+• Analyzing an entire domain and its JS files:
+python linkfinder.py -i https://example.com -d
+• Burp input (select in target the files you want to save, right click, Save selected items, feed that file as input):
+python linkfinder.py -i burpfile -b
+• Enumerating an entire folder for JavaScript files, while looking for endpoints starting with /api/ and finally saving the results to results.html:
+python linkfinder.py -i 'Desktop/*.js' -r ^/api/ -o results.html
+
+
+
