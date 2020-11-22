@@ -1,0 +1,51 @@
+Fuzzing
+-----------
+
+>> github.com/danielmiessler/SecLists/tree/master/Fuzzing
+>> github.com/fuzzdb-project/fuzzdb
+>> github.com/swisskyrepo/PayloadsAllTheThings
+>> github.com/maurosoria/dirsearch/blob/master/db/dicc.txt
+
+Fuzzing for sensitive files
+>> github.com/maurosoria/dirsearch/blob/master/db/dicc.txt
+ 
+ ++ dirsearch/db/dicc.txt
+ 
+ -> wfuzz
+ >> pip install wfuzz
+ >> wfuzz -w wordlist.txt http://example.com/FUZZ
+ >> wfuzz -c -w /root/tools/SecLists/Fuzzing/LFI/dicc.txt http://testphp.vulnweb.com/FUZZ
+>> wfuzz -c --hc 404,400,403,500 -w /root/tools/SecLists/Fuzzing/LFI/dicc.txt http://testphp.vulnweb.com/FUZZ
+
+
+stok bounty thursdays
+-----------------------------------------
+
+KingOfOneLineTips
+>> https://github.com/KingOfBugbounty/KingOfBugBountyTips	
+
+Nuclei
+>> https://github.com/projectdiscovery/nuclei
+
+Amass
+>> https://github.com/OWASP/Amass
+>> https://recon.dev/
+
+Hakluke on medium
+>> https://medium.com/@hakluke
+
+Project Discovery's Chaos
+>> https://chaos.projectdiscovery.io
+
+Webcast: Modern Webapp Pentesting: How to Attack a JWT
+>> https://www.blackhillsinfosec.com/webcast-modern-webapp-pentesting-how-to-attack-a-jwt/
+
+FFUF
+>> https://github.com/ffuf/ffuf
+
+Katie Paxton-Fear
+>> https://insiderphd.dev/
+
+Command line driven generation of bug bounty reports 
+>> https://github.com/codingo/bbr
+
