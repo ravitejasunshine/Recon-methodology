@@ -1,0 +1,13 @@
+yahoo-part2
+→ Tools
++++ https://github.com/tomnomnom/anew
++++ https://github.com/tomnomnom/meg
++++ censys.io
+443.https.tls.chain.parsed.names:yahoo.com
++++ dirsearch github
++++ gowitness
++++ ehsahil/recon-my-way(aquaton)
+
+python -m SimpleHTTPServer 9900
+killall -9 python
+killall -9 aquaton
