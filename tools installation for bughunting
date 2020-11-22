@@ -1,0 +1,316 @@
+bug bounty tools installation
+----------------------------------------------------------
+>> apt-get install golang
+check version
+>> go --version
+
+>> httprobe github
+
+
+tool 2:-- ffuf
+
+>> ffuf github
+>> cd ffuf
+>> go build
+>> change name 
+>> mv ffuf fuzd
+>> ./fuzz
+how to run the fuzz tool
+>> ./fuzz -w /root/tools/seclists/Discovery/Web-Content/raft-large-directories.txt -u "http://example.com/FUZZ"
+
+>> ./fuzz -w /root/tools/seclists/Discovery/Web-Content/raft-large-directories.txt -u "http://example.com/FUZZ" -fc 401 (fc means filter code 401 skipped)
+
+>> ./fuzz -w /root/tools/seclists/Discovery/Web-Content/raft-large-directories.txt -u "http://example.com/FUZZ" -mc 301 (mc means match code)
+
+>> ./fuzz -w /root/tools/seclists/Discovery/Web-Content/raft-large-directories.txt -u "http://example.com/FUZZ" -recursion
+
+>> ./fuzz -w /root/tools/seclists/Discovery/Web-Content/raft-large-directories.txt -u "http://example.com/FUZZ" -recursion -recursion depth 2
+
+>> ./fuzz -w /root/tools/seclists/Discovery/Web-Content/raft-large-directories.txt -u "http://example.com/FUZZ.EXT" -w /usr/share/seclists/Discovery/Web-Content/ext.txt:EXT
+
+>> ./fuzz -w /root/tools/seclists/Discovery/Web-Content/raft-large-directories.txt -u "http://example.com/FUZZ" -o metasploit -of csv
+
+tool 3:- EyeWitness - take screenshots of websites
+
+>> apt-get install eyewitness
+>> eyewitness --help
+>> eyewitness --web -f domains.txt
+>> eyewitness --web -f /root/Desktop/eyewitness/domains.txt -d /root/Desktop/eyewitness/screen
+
+tool 4:- JSParser
+
+>> github JSParser
+
+tool 5:- masscan
+
+>> github masscan
+
+>> https://danielmiessler.com/study/masscan/
+
+>> https://github.com/robertdavidgraham/masscan
+
+>> https://www.youtube.com/watch?v=VJOhbl3uuG0&list=PLsbgw-XvxIhGBQGiTuH0yZL8TwgONvTXf&index=5
+
+
+>> masscan <ip-address> -p 443
+
+tool 6:- massdns
+
+>> github.com/blechschmidt/massdns
+
+>> assetfinder att.com --subs-only | ./massdns -r ../lists/reslovers.txt -o S -w resloved.txt
+
+>> assetfinder domain.com --subs-only | ./massdns -r ../lists/reslovers.txt -o S -w results.txt domains-list.txt
+
+>> massdns/bin/$ cat resloved.txt | sed 's/A.*// ; s/CN.*// ; s/\..$//'
+
+>> massdns/bin/$ cat resloved.txt | sed 's/A.*// ; s/CN.*// ; s/\..$//' | wc -w
+
+tool 7:- owasp amass
+
+>> github amass
+
+>> apt-get install amass
+
+>> amass intel -d att.com -whois
+
+>> amass intel -d att.com -whois -o attamass.com
+
+>> cat attamass.com | wc -w 
+
+>> cat attamass.com | grep att | wc -w 
+
+>> cat attamass.com | grep att | > intel.txt
+
+>> massdns.sh attamass.com
+
+>> cat resolved-domains.txt | grep att | wc -w
+
+>> cat resolved-domains.txt | grep att > intel.txt
+
+>> amass enum -d att.com -o enum_att.txt
+
+>> curl amssconfig.ini -O
+
+>> cat config.ini
+
+>> amass intel -asn 2686,17225,7018,,25993 -o asn.txt
+
+>>
+
+tool 8:- assetfinder
+
+>> github.com/tomnomnom/assetfinder
+
+>> assetfinder uber.com
+
+>> assetfinder --subs-only uber.com
+
+tool 9:- shuffleDNS
+
+>> cd /usr/bin/shuffledns/
+
+>> ./shuffledns -h
+
+
+>> amass enum -passive -d example.com -o passive.txt
+
+>> cat passive.txt
+
+>> shuffledns -d example.com -list passive.txt -r /root/resolvers.txt
+
+>> shuffledns -d example.com -list passive.txt -r /root/resolvers.txt -o resloved.txt
+
+>> cat resloved.txt
+
+>> less resloved.txt
+
+bruteforce the domains
+
+>> shuffledns -d example.com -w /root/tools/Seclists/Discovery/DNS/subdomains-topmillion-5000.txt -r /root/reslovers.txt -o bruteforce.txt
+
+tool 10:- dnsvalidator
+
+>> https://github.com/vortexau/dnsvalidator
+
+>> dnsvalidator -tL https://public-dns.info/nameservers.txt -threads 20 -o resolvers.txt
+
+>> cat resolvers.txt | tail -n 50 > /root/resolvers.txt
+
+--------------------------------------------------------------------------------------------------------------
+
+
+Bug Bounty | Basic Recon Automation 
+-----------------------------------------------------------------------------
+part - 1
+
+mkdir basic-recon
+cd basic-recon
+
+
+1 - passive Enumeration
+subfinder
+>> subfinder -d hackerone.com -o subfinder.txt
+assetfinder
+>> assetfinder -h
+>> assetfinder -subs-only hackerone.com | tee hackerone.com
+amass
+>> amass enum -passive -d hackerone.com -o passive.txt
+
+2 - Active enumeration - Bruteforce
+shuffledns
+>>shuffledns -d hackerone.com -w /root/tools/SecLists/Discovery/DNS/deepmagic.com-prefixes-top500.txt -r /root/resolvers.txt
+
+
+3 - Reslove Domains
+shuffledns
+
+4 - Looking for HTTP/HTTPS domains
+httpx
+
+5 - cat domains.txt | waybackurls |
+6 - gf ssrf wayback.txt
+7 - aquatone
+8 - httpx + nuclei = CVES + VULNS + TECH
+ 
+------------------
+nano recon.sh
+chmod +x recon.sh
+./recon.sh hackerone.com
+
+--------------------
+nano nuclei_scanner.sh
+chmod +x nuclei_scanner.sh
+./nuclei_scanner.sh
+./nuclei_scanner.sh hackerone.com
+
+------------------------
+#! /bin/bash
+
+domain="$1"
+
+scanner(){
+cat $domain/Recon/httpx.txt | nuclei -t /root/nuclei-templates/cves/ -c 50 -o $domain/Recon/nuclei/cves.txt
+cat $domain/Recon/httpx.txt | nuclei -t /root/nuclei-templates/vulnerabilities/ -c 50 -o $domain/Recon/nuclei/vulnerabilities.txt
+cat $domain/Recon/httpx.txt | nuclei -t /root/nuclei-templates/files/ -c 50 -o $domain/Recon/nuclei/files.txt	
+}
+scanner
+
+
+-----------------------------------------------------------------------
+part -2 
+
+1 - nuclei
+>> echo "https://att.net" | nuclei -t /root/tools/nuclei-templates/cves/ -c 50 -o basic-recon/nuclei-output.txt
+
+2 - waybackurls
+ 
+ ~/basic-recon/hackerone.com/Recon/wayback
+
+ mkdir wayback
+ cd wayback
+
+ >> cat ../../domains.txt | waybackurls | tee tmp.txt
+ 
+ >> cat tmp.txt | egrep -v "\.woff|\.ttf|\.svg|\.eot|\.png|\.jpeg|\.jpg|\.css|\.ico"
+
+ >> cat tmp.txt | egrep -v "\.woff|\.ttf|\.svg|\.eot|\.png|\.jpeg|\.jpg|\.css|\.ico" | sed 's/:80//g;s/:443//g' | sort -u > $domain/Recon/wayback/valid.txt
+
+
+ >> cat tmp.txt | egrep -v "\.woff|\.ttf|\.svg|\.eot|\.png|\.jpeg|\.jpg|\.css|\.ico" | sed 's/:80//g;s/:443//g' | sort -u > wayback.txt
+
+ Fuzz
+
+ >> fuzz -c -u "FUZZ" -w valid.txt -mc 200 -of csv -o valid-tmp.txt 
+
+
+>> cat valid-tmp.txt
+
+>> cat valid-tmp.txt | grep http 
+
+>> cat valid-tmp.txt | grep http 
+
+>> cat valid-tmp.txt | grep http | awk -F "," '{print $1}'
+
+wayback data
+wayback_scanner.sh
+mv nuclei_scanner.sh wayback_scanner.sh
+
+./wayback_scanner.sh hackerone.com
+
+gf patterns
+
+>> /basic_recon/hackerone.com/Recon/wayback# gf xss wayback.txt
+
+>> /basic_recon/hackerone.com/Recon/wayback# gf sqli wayback.txt
+
+------------------------------------------------
+part -3
+
+9 - Custom wordlists (paths/parameters) from wayback data
+unfurl
+
+github/tomnomnom/unfurl
+
+>> cat wayback.txt | unfurl -unique domains
+
+>> cat wayback.txt | unfurl -unique paths
+
+>> mkdir /tmp/unfurl
+
+>> cat wayback.txt | unfurl -unique paths > /tmp/unfurl/paths.txt
+
+>> cd /tmp/unfurl
+
+>> ls
+paths.txt
+>>vi paths.txt
+>> cat paths.txt | less
+
+>> cat paths.txt | sed 's/\// /g' | awk '{print $1}' | less
+
+>> 
+
+
+
+10 - Domains to IP Resolve
+massdns
+
+>>
+
+11 - Lists of domains to be scanned
+recon.sh scope.txt
+
+
+--------------------
+5 - scan HTTP/HTTPS results with nuclei
+nuclei -CVE,Vulnerabilities,Files,Technologies
+
+6 - Fetch wayback Data
+waybackurls
+
+7 - filter "valid" urls form wayback Data
+ffuf
+
+8 - filter results with "gf"
+gf xss, gf ssrf
+
+
+
+
+
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
