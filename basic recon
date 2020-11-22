@@ -1,0 +1,67 @@
+Basic Recon automation:
+-----------------------------------
+
+part -1
+-------------------------------------
+1 - passive  Enumeration
+
+subfinder
+subfinder -d hackerone.com -o  subfinder.txt
+
+assetfinder
+assetfinder -subs-only hackerone.com | tee hackerone.com
+
+amass
+amass enum -passive -d hackerone.com -o passive.txt
+
+2 - Active enumeration - Bruteforce
+shuffledns
+
+3 - Resolve Domains
+shuffledns
+
+4 - Looking for HTTP/HTTPS domains
+
+5 - aquatone
+
+6 - masscan + nmap
+
+7 - domains.txt | waybackurls
+
+8 - gf ssrf wayback.txt
+
+9 - httpx + nuclei = CVES + Tech
+---------------------------------------------------------
+part - 2
+
+1 - Scan HTTP/HTTPS results with nuclei
+nuclei - CVE,Vulnerabilities,Files,Technologies
+
+commands:
+
+echo "https://att.net" | nuclei -t /root/nuclei-templates/cves/ -c 50 -o basic-recon/nuclei-output.txt
+
+
+2 - Fetch Wayback Data
+waybackurls
+
+3 - filter "valid" urls from wayback Data
+ffuf
+
+4 - filter results with "gf"
+gf xss, gf ssrf
+
+
+--------------------------------------------------------------------
+part - 3 
+
+
+-----------------------------------------------------------------------------
+https://eforensicsmag.com/bug-bounty-methodology-ttp-tacticstechniques-and-procedures-v-2-0/
+https://blog.usejournal.com/bug-hunting-methodology-part-1-91295b2d2066
+reslovers - massdns
+
+
+https://raw.githubusercontent.com/RootUp/PersonalStuff/master/http-vuln-cve2020-5902.nse
+
+https://github.com/Gh0st0ne/http-vuln-cve2020-3452.nse/blob/master/nmap.nse
