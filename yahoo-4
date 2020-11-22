@@ -1,0 +1,37 @@
+yahoo-part4
+→ Practice website:
+>>bugbountynotes  this is website
+
+gitlinks:-
+→ https://github.com/yassineaboukir
+→ https://github.com/smiegies
+→ https://github.com/appsecco
+→ 
+→ Asnlookup
+→ search yahoo in asnlookup
+→shodan search:- ASN:AS24506
+>> ASN:AS36646 port: “8081”
+→ fuzzing
+xss attack senario:- "><U>test234
+
+github domain search
+>> site:githiub.com + “www.exampledomain.com”
+>> site:ipinfo.io “yahoo”
+
+
+→ dirsearch
+→ massscan
+>> sudo masscan -p80,443,8443,8080,8081 --rate=1000 --range=10000 ipaddress or website --open
+
+3000,9443 ports sometimes.
+
+>> sudo masscan -iL ip.txt -p80,443,8443,8080,8081,3000,9443 --rate=10000 --open
+
+
+
+→google searchff
+>> zigo0 yahoo rce
+ >> ipinfo.io(some api related stuff)
+ >> host.io/example.com
+ >>
+ 
