@@ -1,0 +1,30 @@
+Exclude extensions
+
+
+.woff .ttf .svg .eot .png .jpeg .jpg .svg .css .ico
+
+egrep -v "\.woff|\.ttf|\.svg|\.eot|\.png|\.jpeg|\.jpg|\.svg|\.css|\.ico"
+
+sed 's/:80//g;s/:443//g'
+
+
+
+responsible disclosure reward r=h:UK
+site:*.*.nl intext:security report reward
+inurl:responsible disclosure reward
+inurl:responsible disclosure bounty
+inurl:responsible disclosure swag
+site:*.*.nl intext:responsible disclosure reward
+responsible disclosure reward r=h:eu
+responsible disclosure reward 2020
+site:*.*.nl intext:security report reward
+"van de melding met een minimum van een" -site:responsibledisclosure.nl
+https://medium.com/@aishwaryakendle/how-we-hijacked-26-subdomains-9c05c94c7049
+https://nozbe.com/bug-bounty/
+
+
+LFI to RCE Fire
+Uploaded shell.php
+Page=php://filter/convert.base64-encode/resource=shell.php
+
+
