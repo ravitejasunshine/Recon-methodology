@@ -1,0 +1,20 @@
+https://www.youtube.com/c/MusabKhan/videos
+
+
+./lazyrecon.sh -d rockstar.com -e rockstar.com
+
+step1: first choose the target and find the subtargets list.
+tools:  subfinder,httpx
+            active or not httpx
+ 
+subfinder -d tesla.com -silent | httpx -title -content-length -status-code -o results.txt
+
+ffuf
+
+ffuf -w /root/tools/SecLists/Discovery/Web-Content/raft-large-directories.txt -u "http://lyncws10.att.com/FUZZ"
+
+
+amass
+
+            
+            
