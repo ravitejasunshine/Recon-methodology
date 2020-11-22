@@ -1,0 +1,96 @@
+#! /bin/bash
+
+host=$1
+wordlist="/root/tools/SecLists/Discovery/DNS/deepmagic.com-prefixs-top500.txt"
+reslovers="/root/reslovers.txt"
+reslove_domain="/root/tools/massdns/bin/massdns -r /root/50resolvers.txt -t A -o S -w"
+
+domain_enum(){
+for domain in $(cat $host);
+do
+mkdir -p $domain $domain/sources $domain/Recon $domain/Recon/nuclei $domain/Recon/wayback $domain/Recon/gf $domain/Recon/wordlist $domain/Recon/masscan
+
+subfinder -d $domain -o $domain/sources/subfinder.txt
+assetfinder -subs-only $domain | tee $domain/sources/hackerone.com
+amass enum -passive -d $domain -o $domain/sources/passive.txt	
+shuffledns -d $domain -w $wordlist -r $reslovers -o $domain/sources/shuffledns.txt
+
+cat $domain/sources/*.txt > $domain/sources/all.txt
+done
+}
+domain_enum
+
+resloving_domains(){
+for domain in $(cat $host);
+do	
+shuffledns -d $domain -list $domain/sources/all.txt -o $domain_enum/domains.txt -r $reslovers
+done
+}
+resloving_domains
+
+http_prob(){
+for domain in $(cat $host);
+do	
+cat $domain/domains.txt | httpx -threads 200 -o $domain/Recon/httpx.txt	
+done
+}
+http_prob
+
+scanner(){
+for domain in $(cat $host);
+do	
+cat $domain/Recon/httpx.txt | nuclei -t /root/nuclei-templates/cves/ -c 50 -o $domain/Recon/nuclei/cves.txt
+cat $domain/Recon/httpx.txt | nuclei -t /root/nuclei-templates/vulnerabilities/ -c 50 -o $domain/Recon/nuclei/vulnerabilities.txt
+cat $domain/Recon/httpx.txt | nuclei -t /root/nuclei-templates/files/ -c 50 -o $domain/Recon/nuclei/files.txt	
+done
+}
+scanner
+
+wayback_data(){
+for domain in $(cat $host);
+do
+cat $domain/domains.txt	| waybackurls | tee $domain/Recon/wayback/tmp.txt
+cat $domain/Recon/wayback/tmp.txt | egrep -v "\.woff|\.ttf|\.svg|\.eot|\.png|\.jpeg|\.jpg|\.css|\.ico" | sed 's/:80//g;s/:443//g' | sort -u >> $domain/Recon/wayback/wayback.txt
+rm $domain/Recon/wayback/tmp.txt
+done
+}
+wayback_data
+
+valid_urls(){
+for domain in $(cat $host);
+do	
+fuzz -c -u "FUZZ" -w $domain/Recon/wayback/wayback.txt -of csv -o $domain/Recon/wayback/valid-tmp.txt	
+cat $domain/Recon/wayback/valid-tmp.txt | grep http | awk -F "," '{print $1}' >> valid.txt
+rm $domain/Recon/wayback/valid-tmp.txt
+done
+}
+valid_urls
+
+
+gf_patterns(){
+for domain in $(cat $host);
+do	
+gf xss $domain/Recon/wayback/valid.txt | tee $domain/Recon/gf/xss.txt
+gf sqli $domain/Recon/wayback/valid.txt | tee $domain/Recon/gf/sql.txt
+done
+}
+gf_patterns
+
+custom_wordlist(){
+for domain in $(cat $host);
+do	
+cat $domain/Recon/wayback/wayback.txt | unfurl -unique paths > $domain/Recon/wordlist/path.txt
+cat $domain/Recon/wayback/wayback.txt | unfurl -unique keys > $domain/Recon/wordlist/params.txt	
+done
+}
+custom_wordlist
+
+get_ip(){
+for domain in $(cat $host);
+do	
+$reslove_domain $domain/Recon/massdns/results.txt $domain/domains.txt
+gf ip $domain/Recon/masscan/results.txt | sort -u > $domain/Recon/masscan/ip.txt	
+done
+}
+get_ip
+
