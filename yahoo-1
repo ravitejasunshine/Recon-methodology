@@ -1,0 +1,57 @@
+yahoo -part1
+1)Tools
+>> crtsh.sh
+     ++ %.yahoo.com
+     ++ www.yahoo.%
+     ++ %25api%25.yahoo.com
+     ++ %25.yahoo.com(level-1 of subdomin)
+     ++ %25.%25.yahoo.com(level2)
+     ++ %25.%25.%25.yahoo.com(level3)
+     ++ %25.%25.%25.%25.yahoo.com(level4)
+     ++ %25.%25.%25.%25.%25.yahoo.com(level5)
+     
+>> certspotter.com
+>> shodan.io
+>> censys.io
+
+
+2) github profiles
+
+→ github.com/tomnomnom
+→ github.com/nahamsec
+     
+→ Ideas
+++ %api%
+++ %corp%
+++ %internal%
+++ %dev%
+
+++ certspotter yahoo.com 
+++ certspotter yahoo.com | wc -l
+++ certspotter yahoo.com | httprobe
+++ certspotter yahoo.com | grep dev
+++ certspotter yahoo.com | grep dev | httprobe
+
+++ for i in `certspotter assistant.yahoo.com | httprobe`; do echo $i; done
+++ for i in `certspotter assistant.yahoo.com | httprobe`; do curl $i/phpinfo.php; done
+++ 
+2) second process of collecting data.
+++ crtsh ops.yahoo.com >> all.txt
+++ crtsh corp.yahoo.com >> all.txt
+
+→ getcount(){
+→ cat all.txt | wc -l
+→ }
+
+>> cat all.txt | httprobe | wc -l
+
+>> “domain.example.com” github.com
+
+>> tools installation
+→ amass
+→ Fantomjs
+→ aqaton
+→ dirsearch github
+→ python -m SimpleHTTPServer:9900
+→ killall -9 python
+→ 
