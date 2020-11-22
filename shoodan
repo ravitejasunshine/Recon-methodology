@@ -1,0 +1,63 @@
+shodan learning
+---------------------
+
+shodan learning 
+-------------------------------------
+
+>> https://medium.com/@cryptdecrypt09
+
+>> https://medium.com/@NullByteWht/how-to-find-vulnerable-webcams-across-the-globe-using-shodan-440591dccb01
+
+>> https://medium.com/@sw33tlie
+
+>> https://medium.com/@bathinivijaysimhareddy
+
+>> https://medium.com/bugbountywriteup
+
+>> https://medium.com/@asm0d3us
+
+>> shodan search 
+++++ kibana content-length:217
+
+>> jenkins
+
+>> title:"Weave Scope"http.favicon.hash:567176827
+
+>> google.com/favicon.ico
+
++++ mongodb servers shodan search
+>> all:"mongodb server information" all:"metrics"
+>> "Siemens, SIMATIC" port:161
+>> "HID VertX" port:4070
+>> "log off" "select the appropriate"
+>> "authentication disabled" "RFB 003.008"
++++++++++shodan commands++++++++++
+ 
+ >> shodan info
+ >> shodan count bigip
+ >> shodan download youtubeliveshodan bigip
+ >> shodan host 1.1.1.1
+ >> shodan myip
+ >> shodan parse -h
+ >> shodan search -h
+ >> shodan scan -h
+ >> shodan stats bigip
+ ++++++++++shodan exploits++++++++++++
+ apache
+ bigip
+ 
+
+ https://medium.com/search?q=shodan
+
+https://medium.com/search?q=api%20leakage
+
+https://medium.com/search?q=aws%20leakage
+
+https://medium.com/search?q=javascript%20vulnerabilities 
+
+
+
+
+
+
+	
